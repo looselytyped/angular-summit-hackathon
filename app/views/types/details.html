@@ -1,6 +1,6 @@
 <div id="type-details" class="col-md-9">
   <div id="type-details-header">
-    <p>FIX ME!!</p>
+    <p>{{ typesCtrl.currentType.name }}</p>
   </div>
   <datepicker ng-model="typeDetailsCtrl.date" min-mode="month" datepicker-mode="'month'"
               ng-change="typeDetailsCtrl.update(typeDetailsCtrl.date)"/>

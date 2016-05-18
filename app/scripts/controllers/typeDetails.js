@@ -12,21 +12,20 @@ angular.module('hackathonApp')
     'TypesFactory', '$routeSegment',
     function(typesFactory, $routeSegment) {
       var vm = this;
-      vm.details = [{
-          "id": "00102dcc-d571-4d9a-868a-8a7c8f42a4a0",
-          "typeId": "5",
-          "comment": "",
-          "from": 1421516014,
-          "to": 1421518314,
-          "activityId": "5",
-          "revision": null,
-          "type": null
-      }];
+      vm.details = [];
       vm.date = new Date();
 
       vm.getTypeName = function(id) {
-        // TODO - FIX THIS!!!
-        return "Raju";
+        // if ($routeSegment.$routeParams.id) {
+        //   vm.currentType = typesFactory.getType($routeSegment.$routeParams.id);
+        // }
+
+        // vm.setTypeName = function(t) {
+        //   vm.currentType.name = t;
+        // };
+
+        // return vm.setTypeName;
+        return typesFactory.getType(id).name;
       };
 
       vm.update = function(d) {
@@ -44,6 +43,18 @@ angular.module('hackathonApp')
         // You will need to extract the ID from the URL
         // Look at the documentation for $routeSegment
         // http://angular-route-segment.com/
+        // vm.date = d;
+        var newStart = moment(d).startOf('month').unix();
+        var newEnd = moment(d).endOf('month').unix();
+
+        console.log($routeSegment.$routeParams.id, newStart, newEnd);
+
+        typesFactory.getTypeDetails($routeSegment.$routeParams.id,
+          newStart, newEnd).then( function(data) {
+          // return data; <-------can't do this!!! no one to receive the object...
+          vm.details = data;
+        });
+
       };
     }
 ]);
